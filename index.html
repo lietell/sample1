@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fffbea">
+  <meta name="description" content="사진을 올리고 위치와 크기, 방향을 조절해 나만의 레몬 짤을 만들어 보세요.">
+  <title>레몬 짤 메이커 🍋</title>
+  <style>
+    :root{color-scheme:light;--ink:#24271e;--sub:#6d7469;--edge:#e8e8d7;--yellow:#ffd82e;--yellow-dark:#efbc00;--card:#fff;--bg:#faf9f1;--shadow:0 16px 45px rgba(47,49,17,.065)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 2% 0%,#fff6b3 0%,transparent 26%),radial-gradient(ellipse at 97% 94%,#f6f4d9 0%,transparent 28%),var(--bg);font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #e6b615;outline-offset:3px}
+    .container{max-width:1160px;margin:auto;padding:32px 22px 54px}.mast{text-align:center;padding:9px 0 28px}.tag{font-weight:900;font-size:12px;letter-spacing:.11em;border:1px solid #ffe681;border-radius:100px;background:#fff9d3;display:inline-flex;align-items:center;gap:8px;padding:8px 12px}.mast h1{font-size:clamp(32px,4.8vw,53px);margin:11px 0 7px;letter-spacing:-.055em;line-height:1.2}.mast p{color:var(--sub);margin:0;font-size:15px;line-height:1.6}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(345px,410px);gap:22px;align-items:start}.card{background:var(--card);border:1px solid var(--edge);border-radius:22px;box-shadow:var(--shadow);padding:20px;min-width:0}.cardhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.cardhead h2{font-size:17px;letter-spacing:-.03em;margin:0}.chip{background:#f4f4e7;color:#666c5d;border-radius:20px;padding:6px 10px;font-size:12px;font-weight:700;white-space:nowrap}.stage{position:relative;background:linear-gradient(120deg,#242b05,#f9da00);border:1px solid #e5e7d7;border-radius:15px;overflow:hidden;touch-action:none}.stage.drag-over{outline:4px solid #f9d500;outline-offset:-5px}.stage canvas{width:100%;height:auto;display:block;cursor:grab}.stage canvas:active{cursor:grabbing}.drop-hint{display:none;position:absolute;inset:0;align-items:center;justify-content:center;background:rgba(16,20,7,.78);color:#fff;font-size:18px;font-weight:800;pointer-events:none}.drag-over .drop-hint{display:flex}.viewer-help{color:var(--sub);font-size:12.5px;line-height:1.65;text-align:center;margin:12px 0 2px}.modebar{display:flex;justify-content:center;gap:8px;margin:14px 0 0}.mini{border:1px solid #e0e0d2;background:#fff;padding:9px 12px;border-radius:11px;color:#40453d;font-size:12px;font-weight:800}.mini.active{background:#fff2a1;border-color:#edce48;color:#322c10}
+    .upload{position:relative;min-height:104px;display:flex;gap:12px;align-items:center;justify-content:center;border:2px dashed #d9c75b;border-radius:14px;background:#fffdf0;padding:17px;cursor:pointer;text-align:center}.upload:hover{background:#fff8d0}.upload svg{flex:0 0 25px}.upload strong{font-size:14px;display:block}.upload small{display:block;color:var(--sub);font-size:12px;margin-top:5px;line-height:1.5}.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.filename{font-size:12px;color:#74776a;margin:9px 0 0;overflow-wrap:anywhere}.divider{height:1px;background:#ededdf;margin:20px 0 18px}.grouphead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:15px}.grouphead h3{font-size:15px;margin:0;letter-spacing:-.03em}.small-note{font-size:11px;color:var(--sub)}.field{margin-bottom:17px}.label-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.field label,.field-title{font-weight:800;font-size:12.5px}.value{font-size:12px;font-weight:800;color:#73620f;background:#fffae2;border-radius:6px;padding:3px 6px;min-width:38px;text-align:center}input[type=range]{accent-color:#e7b900;width:100%;margin:0;height:19px;cursor:pointer}input[type=color]{width:100%;height:41px;border:1px solid #dedfcf;background:white;border-radius:10px;padding:4px;cursor:pointer}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}.select{width:100%;height:41px;padding:0 11px;background:#fff;border:1px solid #dedfcf;border-radius:10px;color:var(--ink)}.button-row{display:flex;gap:8px;flex-wrap:wrap}.utility{border:1px solid #dedfcf;border-radius:10px;background:#fff;padding:10px 12px;font-size:12.5px;font-weight:800;color:#474b40}.utility:hover{background:#faf8e9}.utility[aria-pressed=true]{background:#fff2b0;border-color:#f0c500}.w-full{width:100%}.toggle{display:flex;align-items:center;gap:10px;font-weight:700;font-size:12.5px;cursor:pointer;line-height:1.5}.toggle input{accent-color:#e3b500;width:17px;height:17px;margin:0}.hint{font-size:12px;color:var(--sub);line-height:1.6;margin:10px 0 0}.warn{margin-top:13px;border-radius:10px;background:#fffaf0;border:1px solid #f5e8c1;padding:10px 11px;font-size:12px;color:#715e37;line-height:1.6}
+    textarea{width:100%;min-height:82px;max-height:180px;resize:vertical;border-radius:11px;border:1px solid #dedfcf;padding:12px;background:#fff;font-size:14px;line-height:1.5}.primary{background:#ffe052;color:#272a15;border:1px solid #efcd31;border-radius:13px;padding:15px 18px;font-size:14px;font-weight:900}.primary:hover{background:#ffd22d}.secondary{background:#fff;border:1px solid #dedfcf;border-radius:13px;padding:14px 15px;font-size:13px;font-weight:800}.actions{display:grid;grid-template-columns:1fr auto;gap:9px}.smallprint{font-size:11.5px;color:var(--sub);text-align:center;line-height:1.6;margin:15px 5px 0}.status{min-height:18px;font-size:12px;color:#647350;line-height:1.5;margin-top:8px}.result{display:none;border-top:1px solid var(--edge);padding-top:14px;margin-top:14px}.result.visible{display:block}.result img{width:100%;border-radius:10px}.result p{font-size:12px;line-height:1.6;color:var(--sub);margin:5px 0 10px}.footer{text-align:center;font-size:12px;color:#858977;margin-top:22px}
+    @media(max-width:880px){.container{padding:22px 13px 44px}.layout{grid-template-columns:1fr}.card{padding:15px}.mast{padding-bottom:22px}.mast p{font-size:13px}.viewer-help{font-size:12px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+<main class="container">
+  <header class="mast"><span class="tag">🍋 LEMON MEME STUDIO</span><h1>레몬 짤 메이커</h1><p>레몬을 건네는 손은 그대로! 왼쪽에 원하는 인물이나 캐릭터를 넣어보세요.</p></header>
+  <div class="layout">
+    <section class="card" aria-label="짤 미리보기">
+      <div class="cardhead"><h2>완성 이미지 미리보기</h2><span class="chip" id="dimensions">1254 × 1254 PNG</span></div>
+      <div class="stage" id="stage"><canvas width="1254" height="1254" id="canvas" aria-label="레몬 배경에 올린 사진과 글자의 실시간 미리보기"></canvas><div class="drop-hint">사진을 여기에 놓으세요 🍋</div></div>
+      <div class="modebar"><button type="button" class="mini active" id="modePhoto" aria-pressed="true">✋ 사진 움직이기</button><button type="button" class="mini" id="modeText" aria-pressed="false">✏️ 글자 움직이기</button></div>
+      <p class="viewer-help" id="viewerHelp">사진을 올린 뒤 미리보기에서 드래그해 위치를 바꾸고, 마우스 휠로 크기를 조절하세요. 모바일도 터치 이동을 지원해요.</p>
+    </section>
+    <section class="card" aria-label="짤 편집 설정">
+      <div class="cardhead"><h2>내 사진으로 꾸미기</h2><span class="chip">AI 누끼 v2.1</span></div>
+      <div class="field"><label for="photo" class="upload"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#897512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M8 8l4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg><span><strong>＋ 사진 선택 / 변경</strong><small>PNG · JPG · WEBP · GIF(첫 프레임)<br>자동 AI 누끼 지원 · 드래그해서 추가 가능</small></span></label><input class="visually-hidden" type="file" id="photo" accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/*"><div class="filename" id="filename">아직 선택한 사진이 없어요.</div></div>
+      <div class="grouphead"><h3>① 사진 위치 · 크기 · 방향</h3><span class="small-note">조절 결과 실시간 반영</span></div>
+      <div class="field"><div class="label-row"><label for="zoom">사진 크기</label><output class="value" id="zoomValue">100%</output></div><input id="zoom" type="range" min="15" max="350" step="1" value="100"></div>
+      <div class="field"><div class="label-row"><label for="rotate">회전</label><output class="value" id="rotateValue">0°</output></div><input id="rotate" type="range" min="-180" max="180" step="1" value="0"></div>
+      <div class="twocol"><div class="field"><div class="label-row"><label for="posX">가로 위치</label><output class="value" id="posXValue">28%</output></div><input id="posX" type="range" min="-40" max="140" step="1" value="28"></div><div class="field"><div class="label-row"><label for="posY">세로 위치</label><output class="value" id="posYValue">51%</output></div><input id="posY" type="range" min="-40" max="140" step="1" value="51"></div></div>
+      <div class="field"><div class="label-row"><label for="fitMode">업로드 시 자동 맞춤</label></div><select id="fitMode" class="select"><option value="contain">사진 전체가 보이게 맞춤</option><option value="cover">왼쪽 공간을 가득 채움</option></select></div>
+      <div class="field"><div class="button-row"><button type="button" class="utility" id="left90">↶ 왼쪽 90°</button><button type="button" class="utility" id="right90">↷ 오른쪽 90°</button><button type="button" class="utility" id="flipX" aria-pressed="false">⇆ 좌우 반전</button><button type="button" class="utility" id="flipY" aria-pressed="false">⇅ 상하 반전</button><button type="button" class="utility" id="photoReset">⟲ 자동 맞춤</button></div></div>
+      <div class="field"><label class="toggle" for="autoCutout"><input type="checkbox" id="autoCutout" checked><span>사진 업로드 시 자동으로 사람 배경 제거하기 (AI 누끼)</span></label><p class="hint">첫 실행 때는 AI 모델을 받아오느라 시간이 조금 걸릴 수 있어요. 처리는 현재 브라우저 안에서만 진행됩니다.</p></div>
+      <div class="field"><div class="button-row"><button type="button" class="utility" id="removeBgBtn">✨ 지금 AI 누끼 다시 하기</button><button type="button" class="utility" id="useOriginalBtn">🖼 원본 사진으로 되돌리기</button><button type="button" class="utility" id="useCutoutBtn">👤 누끼 결과 다시 사용</button></div></div>
+      <div class="field"><label class="toggle" for="protect"><input type="checkbox" id="protect" checked><span>오른쪽 레몬 보호하기 (넘치는 사진 자동 자르기)</span></label><p class="hint">사진이 왼쪽 영역 밖으로 나오면 자동으로 잘라 손과 레몬이 가려지지 않게 합니다.</p></div>
+      <div class="field"><div class="label-row"><label for="feather">오른쪽 사진 경계 자연스럽게</label><output class="value" id="featherValue">10%</output></div><input id="feather" type="range" min="0" max="30" step="1" value="10"></div>
+      <div class="warn">💡 일반 JPG를 올려도 자동으로 사람만 남기도록 시도해요. 결과가 마음에 들지 않으면 <strong>원본 사진으로 되돌리기</strong>를 누르거나 다시 다른 사진으로 시도해 보세요.</div>
+      <div class="divider"></div>
+      <div class="grouphead"><h3>② 원하는 문구 넣기</h3><span class="small-note">선택 사항</span></div>
+      <div class="field"><label for="message" class="field-title">문구</label><textarea id="message" placeholder="예: 레몬 받아라!" maxlength="300" spellcheck="false"></textarea></div>
+      <div class="twocol"><div class="field"><div class="label-row"><label for="fontSize">글씨 크기</label><output class="value" id="fontSizeValue">80px</output></div><input id="fontSize" type="range" min="18" max="180" step="2" value="80"></div><div class="field"><div class="label-row"><label for="outline">글씨 테두리</label><output class="value" id="outlineValue">8px</output></div><input id="outline" type="range" min="0" max="22" step="1" value="8"></div><div class="field"><label for="fill" class="field-title">글씨 색</label><input id="fill" type="color" value="#ffffff"></div><div class="field"><label for="stroke" class="field-title">테두리 색</label><input id="stroke" type="color" value="#202020"></div></div>
+      <div class="twocol"><div class="field"><div class="label-row"><label for="textX">글씨 가로 위치</label><output class="value" id="textXValue">50%</output></div><input id="textX" type="range" min="0" max="100" step="1" value="50"></div><div class="field"><div class="label-row"><label for="textY">글씨 세로 위치</label><output class="value" id="textYValue">85%</output></div><input id="textY" type="range" min="0" max="100" step="1" value="85"></div></div>
+      <div class="field"><label for="fontFamily" class="field-title">글꼴</label><select id="fontFamily" class="select"><option value="bold">굵은 고딕 (기본)</option><option value="serif">명조</option><option value="mono">고정폭</option></select></div>
+      <div class="divider"></div>
+      <div class="actions"><button type="button" class="primary" id="download">⬇ 완성 짤 PNG 다운로드</button><button type="button" class="secondary" id="resetAll">전체 초기화</button></div>
+      <div class="status" id="status" aria-live="polite"></div>
+      <div class="result" id="result"><p>휴대폰에서 다운로드가 안 된다면 아래 이미지를 길게 눌러 저장하세요.</p><img id="resultImage" alt="완성된 레몬 짤"></div>
+      <p class="smallprint">이미지 처리는 현재 브라우저에서만 수행되며 사진을 서버로 전송하지 않습니다. 저장 크기: 1254 × 1254px.</p>
+    </section>
+  </div>
+  <footer class="footer">🍋 만든 짤을 자유롭게 즐겨보세요. 공개 게시 시 이미지의 사용 권리는 직접 확인해 주세요.</footer>
+</main>
+<script type="module">
+// Load the AI engine on demand so the rest of the editor still works if a CDN is blocked.
+let cachedRemoveBackground;
+async function getRemoveBackground(){
+  if(!cachedRemoveBackground){
+    const mod = await import("https://esm.sh/@imgly/background-removal@1.7.0?bundle");
+    cachedRemoveBackground = mod.default || mod.removeBackground;
+    if(typeof cachedRemoveBackground !== 'function') throw new Error('AI module did not provide a removal function');
+  }
+  return cachedRemoveBackground;
+}
+
+(()=>{'use strict';
+  const $ = id => document.getElementById(id);
+  const W=1254,H=1254,canvas=$('canvas'),ctx=canvas.getContext('2d',{alpha:false}),stage=$('stage');
+  const backdrop=new Image(); let backdropReady=false;
+  const state={photo:null,photoUrl:null,originalPhoto:null,originalPhotoUrl:null,originalFile:null,cutoutPhoto:null,cutoutPhotoUrl:null,flipX:false,flipY:false,mode:'photo',drag:null,removeJob:0,isRemoving:false};
+  const photoFields=['zoom','rotate','posX','posY','fitMode','protect','feather'];
+  const textFields=['message','fontSize','outline','fill','stroke','textX','textY','fontFamily'];
+  const defaults={zoom:100,rotate:0,posX:28,posY:51,fitMode:'contain',protect:true,feather:10,autoCutout:true,message:'',fontSize:80,outline:8,fill:'#ffffff',stroke:'#202020',textX:50,textY:85,fontFamily:'bold'};
+  const fontMap={bold:'900 1px system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif',serif:'900 1px "Batang", Georgia, serif',mono:'900 1px ui-monospace, "Consolas", monospace'};
+  let photoLayer=document.createElement('canvas');photoLayer.width=W;photoLayer.height=H;let photoCtx=photoLayer.getContext('2d');
+  function num(id){return Number($(id).value)}
+  function setValue(id,val){$(id).type==='checkbox'?($(id).checked=Boolean(val)):($(id).value=String(val))}
+  function syncLabels(){for(const [id,unit] of Object.entries({zoom:'%',rotate:'°',posX:'%',posY:'%',feather:'%',fontSize:'px',outline:'px',textX:'%',textY:'%'})){$(id+'Value').textContent=$(id).value+unit}}
+  function setStatus(msg){$('status').textContent=msg}
+  function safeRevoke(url){if(url)URL.revokeObjectURL(url)}
+  function setPhoto(image,kind='current'){state.photo=image;if(kind==='cutout'&&state.cutoutPhoto){$('useCutoutBtn').disabled=false}else if(kind==='original'&&state.originalPhoto){$('useOriginalBtn').disabled=false}render()}
+  function updateVariantButtons(){
+    $('useOriginalBtn').disabled=!state.originalPhoto || state.photo===state.originalPhoto;
+    $('useCutoutBtn').disabled=!state.cutoutPhoto || state.photo===state.cutoutPhoto;
+    $('removeBgBtn').disabled=!state.originalFile || state.isRemoving;
+  }
+  function drawImage(){
+    if(!state.photo)return;
+    const img=state.photo,iw=img.naturalWidth,ih=img.naturalHeight;
+    if(!(iw>0&&ih>0))return;
+    const fitWidth=W*.53,fitHeight=H*.92;
+    const fit=num('zoom')/100*($('fitMode').value==='cover'?Math.max(fitWidth/iw,fitHeight/ih):Math.min(fitWidth/iw,fitHeight/ih));
+    const c=photoCtx;c.clearRect(0,0,W,H);c.save();c.translate(num('posX')/100*W,num('posY')/100*H);c.rotate(num('rotate')*Math.PI/180);c.scale(state.flipX?-1:1,state.flipY?-1:1);
+    c.drawImage(img,-iw*fit/2,-ih*fit/2,iw*fit,ih*fit);c.restore();
+    if($('protect').checked){
+      const feather=num('feather')/100*W;
+      const edge=W*.615;
+      c.save();c.globalCompositeOperation='destination-out';
+      if(feather>0){
+        const fade=c.createLinearGradient(edge-feather,0,edge,0);
+        fade.addColorStop(0,'rgba(0,0,0,0)');fade.addColorStop(1,'rgba(0,0,0,1)');
+        c.fillStyle=fade;c.fillRect(edge-feather,0,feather,H);
+      }
+      c.fillStyle='#000';c.fillRect(edge,0,W-edge,H);
+      c.restore();
+    }
+    ctx.drawImage(photoLayer,0,0);
+  }
+  function wrapLine(line,maxWidth){
+    if(!line)return [''];
+    const result=[];let current='';
+    for(const char of Array.from(line)){if(current && ctx.measureText(current+char).width>maxWidth){result.push(current);current=char}else{current+=char}}
+    result.push(current);return result;
+  }
+  function drawText(){
+    const msg=$('message').value;if(!msg)return;
+    const size=num('fontSize');ctx.save();ctx.font=fontMap[$('fontFamily').value].replace('1px',size+'px');ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';ctx.miterLimit=2;ctx.strokeStyle=$('stroke').value;ctx.fillStyle=$('fill').value;ctx.lineWidth=num('outline')*2;
+    const lines=msg.split(/\r?\n/).flatMap(line=>wrapLine(line,W*.88)).slice(0,24);
+    const lh=size*1.22,startY=num('textY')/100*H-(lines.length-1)*lh/2,x=num('textX')/100*W;
+    for(let i=0;i<lines.length;i++){const y=startY+i*lh;if(num('outline')>0)ctx.strokeText(lines[i],x,y);ctx.fillText(lines[i],x,y)}ctx.restore();
+  }
+  function render(){
+    ctx.clearRect(0,0,W,H);
+    if(backdropReady)ctx.drawImage(backdrop,0,0,W,H);
+    else{ctx.fillStyle='#efe1a0';ctx.fillRect(0,0,W,H);ctx.fillStyle='#30331c';ctx.font='bold 42px system-ui';ctx.textAlign='center';ctx.fillText('배경을 불러오는 중…',W/2,H/2)}
+    if(state.photo)drawImage();drawText();updateVariantButtons();
+  }
+  function setMode(mode){state.mode=mode;$('modePhoto').classList.toggle('active',mode==='photo');$('modeText').classList.toggle('active',mode==='text');$('modePhoto').setAttribute('aria-pressed',String(mode==='photo'));$('modeText').setAttribute('aria-pressed',String(mode==='text'));$('viewerHelp').textContent=mode==='photo'?'사진을 올린 뒤 미리보기에서 드래그해 위치를 바꾸고, 마우스 휠로 크기를 조절하세요. 모바일도 터치 이동을 지원해요.':'문구를 입력한 뒤 미리보기에서 드래그하면 글씨 위치가 바뀝니다.'}
+  function resetPhoto(){for(const id of ['zoom','rotate','posX','posY'])setValue(id,defaults[id]);state.flipX=false;state.flipY=false;for(const id of ['flipX','flipY'])$(id).setAttribute('aria-pressed','false');syncLabels();render()}
+  async function fileToImage(fileOrBlob){
+    const url=URL.createObjectURL(fileOrBlob),img=new Image();
+    try{await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});if(!img.naturalWidth||!img.naturalHeight)throw new Error('image dimensions unavailable');return {img,url};}
+    catch(err){URL.revokeObjectURL(url);throw err}
+  }
+  function progressText(key,current,total){
+    if(total&&Number.isFinite(total)&&total>0){const percent=Math.min(100,Math.round(current/total*100));return `AI 누끼 준비 중… ${percent}%`}
+    return key&&key!=='compute' ? `AI 누끼 준비 중… ${key}` : 'AI가 배경을 제거하는 중…';
+  }
+  async function runBackgroundRemoval(force=false){
+    if(!state.originalFile)return;
+    if(state.isRemoving)return;
+    if(!force && !$('autoCutout').checked)return;
+    const runId=++state.removeJob; state.isRemoving=true; updateVariantButtons();
+    setStatus('AI 누끼를 준비하는 중이에요… 첫 사용 시 AI 모델을 다운로드합니다.');
+    try{
+      const processor=await getRemoveBackground();
+      if(runId!==state.removeJob)return;
+      const blob=await processor(state.originalFile,{model:'small',progress:(key,current,total)=>{if(runId!==state.removeJob)return;setStatus(progressText(key,current,total));}});
+      if(runId!==state.removeJob)return;
+      const {img,url}=await fileToImage(blob);
+      safeRevoke(state.cutoutPhotoUrl); state.cutoutPhoto=img; state.cutoutPhotoUrl=url; state.photo=img;
+      setStatus('배경 제거 완료! 사람만 남긴 상태로 적용했어요.');
+      render();
+    }catch(err){
+      console.error(err);
+      if(runId!==state.removeJob)return;
+      setStatus('AI 누끼에 실패했어요. 네트워크 연결을 확인하고 다시 시도해 주세요. 사진 편집과 저장은 계속 사용할 수 있어요.');
+    }finally{
+      if(runId===state.removeJob){state.isRemoving=false;updateVariantButtons();}
+    }
+  }
+  async function loadPhoto(file){
+    if(!file)return;
+    if(!file.type.startsWith('image/')){setStatus('이미지 파일만 업로드해 주세요.');return}
+    // Invalidate any in-flight AI result for the previous uploaded picture.
+    const uploadId=++state.removeJob; state.isRemoving=false;
+    if(file.size>50*1024*1024){setStatus('50MB 이하 이미지를 선택해 주세요.');return}
+    try{
+      const {img,url}=await fileToImage(file);
+      if(uploadId!==state.removeJob){safeRevoke(url);return;}
+      safeRevoke(state.originalPhotoUrl); safeRevoke(state.cutoutPhotoUrl); safeRevoke(state.photoUrl);
+      state.originalPhoto=img; state.originalPhotoUrl=url; state.originalFile=file; state.cutoutPhoto=null; state.cutoutPhotoUrl=null; state.photo=img; state.photoUrl=url;
+      $('filename').textContent='선택한 사진: '+file.name; resetPhoto(); setMode('photo');
+      setStatus($('autoCutout').checked ? '원본 사진을 불러왔어요. 이제 AI가 배경을 제거합니다…' : '사진을 불러왔어요. 드래그하거나 크기·회전을 조절해 보세요.');
+      if($('autoCutout').checked)runBackgroundRemoval(false);
+    }catch(err){console.error(err);setStatus('이미지를 열 수 없어요. 다른 PNG/JPG 파일을 사용해 주세요.')}
+  }
+  $('photo').addEventListener('change',e=>{loadPhoto(e.target.files[0]);e.target.value=''});
+  for(const id of [...photoFields,...textFields])$(id).addEventListener('input',()=>{syncLabels();render()});
+  $('modePhoto').addEventListener('click',()=>setMode('photo'));$('modeText').addEventListener('click',()=>setMode('text'));
+  $('left90').addEventListener('click',()=>rotateBy(-90));$('right90').addEventListener('click',()=>rotateBy(90));
+  $('removeBgBtn').addEventListener('click',()=>runBackgroundRemoval(true));
+  $('useOriginalBtn').addEventListener('click',()=>{if(!state.originalPhoto)return;state.photo=state.originalPhoto;render();setStatus('원본 사진으로 되돌렸어요.')});
+  $('useCutoutBtn').addEventListener('click',()=>{if(!state.cutoutPhoto)return;state.photo=state.cutoutPhoto;render();setStatus('AI 누끼 결과를 다시 적용했어요.')});
+  $('autoCutout').addEventListener('change',()=>{if($('autoCutout').checked&&state.originalFile&&!state.cutoutPhoto){runBackgroundRemoval(false)}render()});
+  function rotateBy(delta){let angle=num('rotate')+delta;angle=((angle+180)%360+360)%360-180;setValue('rotate',angle);syncLabels();render()}
+  for(const id of ['flipX','flipY'])$(id).addEventListener('click',()=>{state[id]=!state[id];$(id).setAttribute('aria-pressed',String(state[id]));render()});
+  $('photoReset').addEventListener('click',()=>{resetPhoto();setStatus('사진 위치·크기·방향을 처음 상태로 맞췄어요.')});
+  function position(e){const b=canvas.getBoundingClientRect();return {x:(e.clientX-b.left)/b.width*100,y:(e.clientY-b.top)/b.height*100}}
+  canvas.addEventListener('pointerdown',e=>{if(e.button!==0&&e.pointerType==='mouse')return;if(state.mode==='photo'&&!state.photo)return;if(state.mode==='text'&&!$('message').value)return;state.drag={pointerId:e.pointerId,from:position(e),x:state.mode==='photo'?num('posX'):num('textX'),y:state.mode==='photo'?num('posY'):num('textY')};canvas.setPointerCapture(e.pointerId)});
+  canvas.addEventListener('pointermove',e=>{if(!state.drag||state.drag.pointerId!==e.pointerId)return;const p=position(e),prefix=state.mode==='photo'?'pos':'text';setValue(prefix+'X',Math.max(state.mode==='photo'?-40:0,Math.min(state.mode==='photo'?140:100,Math.round(state.drag.x+p.x-state.drag.from.x))));setValue(prefix+'Y',Math.max(state.mode==='photo'?-40:0,Math.min(state.mode==='photo'?140:100,Math.round(state.drag.y+p.y-state.drag.from.y))));syncLabels();render()});
+  for(const eventName of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(eventName,()=>state.drag=null);
+  stage.addEventListener('wheel',e=>{if(state.mode!=='photo'||!state.photo)return;e.preventDefault();setValue('zoom',Math.max(15,Math.min(350,num('zoom')+(e.deltaY>0?-5:5))));syncLabels();render()},{passive:false});
+  for(const evt of ['dragenter','dragover'])stage.addEventListener(evt,e=>{e.preventDefault();stage.classList.add('drag-over')});
+  for(const evt of ['dragleave','drop'])stage.addEventListener(evt,e=>{e.preventDefault();stage.classList.remove('drag-over')});
+  stage.addEventListener('drop',e=>{const file=Array.from(e.dataTransfer.files).find(f=>f.type.startsWith('image/'));if(file)loadPhoto(file)});
+  window.addEventListener('paste',e=>{if(e.target.closest('input,textarea,select'))return;const item=Array.from(e.clipboardData?.items||[]).find(i=>i.type.startsWith('image/'));if(item){e.preventDefault();loadPhoto(item.getAsFile())}});
+  $('resetAll').addEventListener('click',()=>{
+    safeRevoke(state.originalPhotoUrl); safeRevoke(state.cutoutPhotoUrl); safeRevoke(state.photoUrl);
+    state.photo=null; state.photoUrl=null; state.originalPhoto=null; state.originalPhotoUrl=null; state.originalFile=null; state.cutoutPhoto=null; state.cutoutPhotoUrl=null; state.flipX=false; state.flipY=false; state.removeJob++; state.isRemoving=false;
+    $('filename').textContent='아직 선택한 사진이 없어요.';
+    for(const [id,val] of Object.entries(defaults))setValue(id,val);
+    for(const id of ['flipX','flipY'])$(id).setAttribute('aria-pressed','false');
+    $('result').classList.remove('visible'); setMode('photo'); syncLabels(); render(); setStatus('모든 설정을 초기화했어요.');
+  });
+  $('download').addEventListener('click',()=>{
+    if(!backdropReady){setStatus('배경 이미지 로딩 중이에요. 다시 시도해 주세요.');return}
+    render();canvas.toBlob(blob=>{if(!blob){setStatus('PNG를 만들지 못했어요. 다시 시도해 주세요.');return}
+      const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='레몬짤-'+new Date().toISOString().slice(0,10)+'.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+      $('resultImage').src=canvas.toDataURL('image/png');$('result').classList.add('visible');setStatus('PNG 이미지를 저장했어요!');
+    },'image/png')
+  });
+  window.addEventListener('beforeunload',()=>{safeRevoke(state.originalPhotoUrl);safeRevoke(state.cutoutPhotoUrl);safeRevoke(state.photoUrl)});
+  backdrop.onload=()=>{backdropReady=true;render();setStatus('레몬 배경이 준비됐어요. 왼쪽에 넣을 사진을 선택해 주세요.')};
+  backdrop.onerror=()=>{setStatus('배경 이미지를 불러오지 못했어요. ZIP 파일을 압축 해제해 index.html을 열었는지 확인해 주세요.')};
+  backdrop.src='assets/lemon-background.png'; syncLabels(); for(const [id,val] of Object.entries(defaults))setValue(id,val); updateVariantButtons(); render();
+})();
+</script>
+</body>
+</html>
